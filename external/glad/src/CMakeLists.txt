@@ -1,4 +1,3 @@
-add_library(glad STATIC glad.c)
+add_library(glad STATIC "glad.c" "../include/glad/glad.h")
 
-target_include_directories(glad PUBLIC ../include/glad)
-target_include_directories(glad PUBLIC ../include/KHR)
+target_include_directories(glad PUBLIC ../include)
