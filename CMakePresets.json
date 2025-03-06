@@ -15,9 +15,9 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_C_COMPILER": "clang",
                 "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/bin",
-                "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/bin",
-                "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/lib"
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/bin/debug",
+                "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/bin/debug",
+                "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/lib/debug"
             }
         }
     ],
