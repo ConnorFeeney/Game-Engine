@@ -1,11 +1,9 @@
-#include "../graphics/graphics.h"
+#include <graphics.h>
 
-int main(){
-    cf::Window window("Window", 1280, 720);
+int main() {
+    cf::Window window("Test", 1280, 720, true);
 
     while(!window.shouldClose()){
-        window.update();
+        window.render();
     }
-
-    return 0;
 }

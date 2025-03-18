@@ -1,15 +1,16 @@
-file(GLOB_RECURSE SOURCES "*.cpp" "*.h")
+file(GLOB_RECURSE SOURCES "*.cpp" "*.c" "*.h")
 
 add_executable(Engine ${SOURCES})
 
 find_package(OpenGL REQUIRED)
 
 target_include_directories(Engine PRIVATE ${OPENGL_INCLUDE_DIR})
-target_include_directories(Engine PRIVATE ../include)
-target_include_directories(Engine PRIVATE ../shaders)
 target_include_directories(Engine PRIVATE ../external/glfw/include)
 target_include_directories(Engine PRIVATE ../external/glad/include/glad)
 target_include_directories(Engine PRIVATE ../external/glad/include/KHR)
+
+target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/math)
+target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/graphics)
 
 target_link_libraries(Engine glfw)
 target_link_libraries(Engine glad)
