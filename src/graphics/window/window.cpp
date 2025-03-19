@@ -4,7 +4,7 @@ bool glfwIsInit = false;
 bool gladIsInit = false;
 
 namespace cf {
-    Window::Window(const char* title, int width, int height, bool resizable){
+    Window::Window(const char* title, int width, int height, bool resizable = false){
         if(!glfwIsInit){
             if(!glfwInit()){
                 throw std::runtime_error("ERR::GLFW::FAILED_INIT");

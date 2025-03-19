@@ -12,7 +12,7 @@
 namespace cf {
     class Window : public RenderTarget {
     public:
-        Window(const char* title, int width, int height, bool resizable);
+        Window(const char* title, int width, int height, bool resizable = false);
         ~Window();
 
         void bind() override;
