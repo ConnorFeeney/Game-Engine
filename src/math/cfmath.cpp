@@ -1,10 +1,7 @@
 #include "cfmath.h"
 
 namespace cf {
-    Vector2f::Vector2f(float x, float y) {
-        this->x = x;
-        this->y = y;
-    }
+    Vector2f::Vector2f(float x, float y) : x(x), y(y) {}
 
     Matrix::Matrix(int rows, int cols, float value = 0.0f) : rows(rows), cols(cols){
         data = new float[rows * cols];

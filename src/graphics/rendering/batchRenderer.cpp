@@ -38,9 +38,9 @@ namespace cf {
     }
 
     void BatchRenderer::cache(std::vector<Vector2f>& vertices, std::vector<unsigned int>& indecies) {
-        if(newFrame){
-            this->vertices.clear();
-            this->indecies.clear();
+        unsigned int indexOffset = this->vertices.size();
+        for(int i = 0; i < indecies.size(); i++){
+            this->indecies.push_back(indecies[i] + indexOffset);
         }
 
         std::vector<float> vert;
@@ -53,12 +53,13 @@ namespace cf {
         }
 
         this->vertices.insert(this->vertices.end(), vert.begin(), vert.end());
-        
-        for(int i = 0; i < indecies.size(); i++){
-            this->indecies.push_back(indecies[i] + this->indecies.size());
-        }
 
         bufferUpdate = true;
+    }
+
+    void BatchRenderer::clearCache() {
+        this->vertices.clear();
+        this->indecies.clear();
     }
 
     void BatchRenderer::bind() {
@@ -103,6 +104,11 @@ namespace cf {
         }
 
         glDrawElements(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0);
+        this->clearCache();
         this->unbind();
+    }
+
+    void BatchRenderer::clear() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 }

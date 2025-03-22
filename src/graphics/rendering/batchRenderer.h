@@ -30,7 +30,6 @@ namespace cf {
         std::vector<float> vertices;
         std::vector<unsigned int> indecies;
         bool bufferUpdate = false;
-        bool newFrame = true;
 
        Shader* shader;
 
