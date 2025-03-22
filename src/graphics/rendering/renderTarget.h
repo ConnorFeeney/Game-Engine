@@ -2,8 +2,8 @@
 
 #include <cfmath.h>
 
-#include "../rendering/drawable.h"
-#include "../rendering/batchRenderer.h"
+#include <rendering/drawable.h>
+#include <rendering/batchRenderer.h>
 
 namespace cf {
     class RenderTarget {

@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "../rendering/renderTarget.h"
+#include <rendering/renderTarget.h>
 
 
 namespace cf {

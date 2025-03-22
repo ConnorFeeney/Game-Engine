@@ -1,25 +1,20 @@
-#pragma once
+#define GLSL(src) "#version 460\n" #src "\n"
 
-#ifndef SHADER_H
-#define SHADER_H
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-#include <unordered_map>
-#include <string>
-#include <filesystem>
+#include <iostream>
 
-namespace CF {
+namespace cf {
     class Shader {
-    private:
-        std::unordered_map<std::string, int> shaders;
     public:
-        Shader();
+        Shader() = default;
+        Shader(const char* vertexSrc, const char* fragmentSrc);
         ~Shader();
 
-        int createProgram(const char *name, const char *vertexSrc, const char *fragmentSrc);
-        int createProgram(const char *name, const char *vertexSrc, const char *geomSrc, const char *fragmentSrc);
-
-        void useProgram(const char *name);
+        void bind();
+        void unbind();
+    private:
+        GLuint shader;
     };
-} // namespace CF
-
-#endif //!SHADER_H
+}

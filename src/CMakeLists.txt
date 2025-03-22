@@ -11,6 +11,8 @@ target_include_directories(Engine PRIVATE ../external/glad/include/KHR)
 
 target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/math)
 target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/graphics)
+target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/shader)
+target_include_directories(Engine PRIVATE ${CMAKE_SOURCE_DIR}/src/thread)
 
 target_link_libraries(Engine glfw)
 target_link_libraries(Engine glad)
