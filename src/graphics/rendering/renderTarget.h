@@ -18,6 +18,6 @@ namespace cf {
         
         ~RenderTarget() = default;
     protected:
-        BatchRenderer renderer;
+        BatchRenderer* renderer;
     };
 }

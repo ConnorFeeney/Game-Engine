@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <rendering/renderTarget.h>
+#include <rendering/batchRenderer.h>
 
 
 namespace cf {
@@ -21,12 +22,14 @@ namespace cf {
         void clear() override;
         void resize(int width, int height) override;
 
-        void draw(Drawable& drawable) override {};
+        void draw(Drawable& drawable) override;
 
         void render() override;
 
         int shouldClose(); 
     private:
         GLFWwindow* window;
+        int width;
+        int height;
     };
 }

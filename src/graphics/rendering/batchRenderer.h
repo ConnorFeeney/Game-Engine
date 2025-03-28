@@ -14,14 +14,13 @@ namespace cf {
         BatchRenderer();
         ~BatchRenderer() = default;
 
-        void cache(std::vector<Vector2f>& vertices, std::vector<unsigned int>& indecies);
+        void cache(std::vector<Vector3f>& vertices, std::vector<unsigned int>& indecies, int width, int height);
         void setShader(Shader& Shader);
 
         void bind();
         void unbind();
 
         void render();
-        void clear();
     private:
         GLuint VAO;
         GLuint VBO;

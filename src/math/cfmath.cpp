@@ -3,42 +3,70 @@
 namespace cf {
     Vector2f::Vector2f(float x, float y) : x(x), y(y) {}
 
-    Matrix::Matrix(int rows, int cols, float value = 0.0f) : rows(rows), cols(cols){
-        data = new float[rows * cols];
-        for(int i = 0; i < rows * cols; i++){
+    void Vector2f::print() const {
+        std::cout << "[" << this->x << ", " << this->y << "]\n";
+    }
+
+    Vector3f::Vector3f(float x, float y, float z) : x(x), y(y), z(z) {}
+    Vector3f::Vector3f(Vector2f v2, float z) : x(v2.x), y(v2.y), z(z) {}
+
+    std::vector<float> Vector3f::toFloat() {
+        std::vector<float> v;
+
+        v.assign({this->x, this->y, this->z});
+
+        return v;
+    }
+
+    void Vector3f::print() const {
+        std::cout << "[" << this->x << ", " << this->y << ", " << this->z << "]\n";
+    }
+
+    template<typename T>
+    Matrix<T>::Matrix(int rows, int cols, T value) : rows(rows), cols(cols) {
+        data = new T[rows * cols];
+        for(int i = 0; i < rows*cols; i++) {
             data[i] = value;
         }
     }
 
-    Matrix::~Matrix() {
-        delete data;
-    }
+    template<typename T>
+    Matrix<T>::~Matrix() {
+        delete[] this->data;
+    }    
 
-    Matrix::Row::Row(float* rowData, int cols) : rowData(rowData), cols(cols) {}
+    template<typename T>
+    Matrix<T>::Row::Row(T* data, int cols) : data(data), cols(cols) {}
 
-    float& Matrix::Row::operator[](int col) {
-        return rowData[col];
-    }
-
-    const float& Matrix::Row::operator[](int col) const{
-        return rowData[col];
-    }
-
-    Matrix::Row Matrix::operator[](int row){
-        return Row(&data[row * cols], cols);
-    }
-
-    Matrix Matrix::operator*(Matrix& other){
-        Matrix result(rows, other.cols);
-
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < other.cols; j++){
-                for(int k = 0; k < cols; k++) {
-                    result[i][j] += (*this)[i][k] * other[k][j];
-                }
-            }
+    template<typename T>
+    typename Matrix<T>::Row Matrix<T>::operator[](int row) {
+        if(row >= rows) {
+            throw std::runtime_error("Row out of bounds");
         }
+        return Row(this->data[row * cols], cols);
+    }
 
-        return result;
+    template<typename T>
+    const typename  Matrix<T>::Row Matrix<T>::operator[](int row) const{
+        if(row >= rows) {
+            throw std::runtime_error("Row out of bounds");
+        }
+        return Row(this->data[row * cols], cols);
+    }
+
+    template<typename T>
+    T& Matrix<T>::Row::operator[](int col) {
+        if(col >= cols) {
+            throw std::runtime_error("Cols out of bounds");
+        }
+        return this->data[col];
+    }
+    
+    template<typename T>
+    const T& Matrix<T>::Row::operator[](int col) const {
+        if(col >= cols) {
+            throw std::runtime_error("Cols out of bounds");
+        }
+        return this->data[col];
     }
 }

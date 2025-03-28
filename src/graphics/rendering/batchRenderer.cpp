@@ -1,6 +1,12 @@
 #include "batchRenderer.h"
 
 namespace cf {
+
+    void screenToNDC(Vector3f& v, int width, int height) {
+        v.x = ((2 * v.x) / width) - 1;
+        v.y = 1 - ((2 * v.y) / height);
+    }
+
     BatchRenderer::BatchRenderer() {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -37,23 +43,29 @@ namespace cf {
         glBindVertexArray(0);
     }
 
-    void BatchRenderer::cache(std::vector<Vector2f>& vertices, std::vector<unsigned int>& indecies) {
-        unsigned int indexOffset = this->vertices.size();
-        for(int i = 0; i < indecies.size(); i++){
-            this->indecies.push_back(indecies[i] + indexOffset);
+    void BatchRenderer::cache(std::vector<Vector3f> &vertices, std::vector<unsigned int> &indecies, int width, int height) {
+        int indecieOffset = this->vertices.size();
+        for(int i = 0; i < indecies.size(); i++) {
+            this->indecies.push_back(indecies[i] + indecieOffset);
         }
-
-        std::vector<float> vert;
-        vert.reserve(sizeof(float) * vertices.size() * 3);
 
         for(int i = 0; i < vertices.size(); i++){
-            vert.push_back(vertices[i].x);
-            vert.push_back(vertices[i].y);
-            vert.push_back(0);
+            screenToNDC(vertices[i], width, height);
+            std::vector<float> v = vertices[i].toFloat();
+            this->vertices.insert(this->vertices.end(), v.begin(), v.end());
         }
 
-        this->vertices.insert(this->vertices.end(), vert.begin(), vert.end());
+        std::cout << "Vertices Cached: " << this->vertices.size() / 3 << " | Indices Cached: " << this->indecies.size() << "\n";
 
+        std::cout << "Cached Vertices: ";
+        for (const auto& vertex : this->vertices) {
+            std::cout << vertex << " ";
+        }
+        std::cout << "\nCached Indices: ";
+        for (const auto& index : this->indecies) {
+            std::cout << index << " ";
+        }
+        std::cout << "\n";
         bufferUpdate = true;
     }
 
@@ -98,7 +110,7 @@ namespace cf {
             }
 
             glBufferSubData(GL_ARRAY_BUFFER, 0, vertexDataSize, &vertices[0]);
-            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexBufferSize, &indecies[0]);
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexDataSize, &indecies[0]);
 
             bufferUpdate = false;
         }
@@ -106,9 +118,5 @@ namespace cf {
         glDrawElements(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0);
         this->clearCache();
         this->unbind();
-    }
-
-    void BatchRenderer::clear() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 }

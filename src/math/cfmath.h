@@ -1,43 +1,55 @@
 #pragma once
 
+#include <stdexcept>
+#include <iostream>
+#include <vector>
+
 namespace cf {
-    typedef struct Vector2f{
+    typedef struct Vector2f {
         float x;
         float y;
 
         Vector2f(float x, float y);
+
+        void print() const;
     } Vector2f;
 
-    typedef struct Vector3f{
+    typedef struct Vector3f {
         float x;
         float y;
         float z;
 
         Vector3f(float x, float y, float z);
+        Vector3f(Vector2f v2, float z);
+
+        std::vector<float> toFloat();
+
+        void print() const;
     } Vector3f;
 
-    typedef struct Matrix {
-        int rows;
-        int cols;
-        float* data;
+    template <typename T = float> struct Matrix {
+        T* data;
+        const int rows;
+        const int cols;
 
-        Matrix(int rows, int cols, float value = 0.0f);
+        Matrix<T>(int rows, int cols, T value = T(0));
         ~Matrix();
 
-        typedef struct Row{
-            float* rowData;
+        struct Row {
+            T* data;
             int cols;
 
-            Row(float* rowData, int cols);
+            Row(T* data, int cols);
 
-            float& operator[](int col);
+            T& operator[](int col);
+            const T& operator[](int col) const;
 
-            const float& operator[](int col) const;
-        } Row;
+            void print() const;
+        };
 
         Row operator[](int row);
         const Row operator[](int row) const;
 
-        Matrix operator*(Matrix& other);
-    } Matrix;
+        void print() const;
+    };
 }
